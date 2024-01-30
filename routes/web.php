@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\attendanceController;
+use App\Http\Controllers\profileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/presensi', [attendanceController::class, 'index'])->name('presensi');
+Route::get('/profil', [profileController::class, 'index'])->name('profil');
