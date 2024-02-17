@@ -2,64 +2,89 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
-class ProfileController extends Controller
+
+class profileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-
-    public function index(){
+    public function index()
+    {
         return view('pages.profile');
     }
 
-    public function edit(Request $request): View
+    public function updatePassword(Request $request)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
+        try {
+            $request->validate([
+                'old_password' => ['required', 'string', 'min:8'],
+                'password' => ['required', 'string', 'min:8', 'confirmed']
+            ], [
+                'password.confirmed' => 'Konfirmasi password tidak cocok dengan password baru.',
+            ]);
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+            $currentPasswordStatus = Hash::check($request->old_password, auth()->user()->password);
+            if ($currentPasswordStatus) {
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+                User::findOrFail(Auth::user()->id)->update([
+                    'password' => Hash::make($request->password),
+                ]);
+
+                Alert::toast('Password berhasil diubah.', 'success')->autoClose(5000);
+
+                return redirect()->back();
+            } else {
+                return redirect()->back()->withErrors(['old_password' => 'Password lama yang dimasukkan salah.']);
+            }
+        } catch (\Exception $e) {
+            // Menampilkan pesan kesalahan jika terjadi pengecualian
+            Alert::toast('Terjadi kesalahan : ' . $e->getMessage(), 'error')->autoClose(5000);
+
+            return redirect()->back();
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function updateAvatar(Request $request)
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        try {
+            // Validasi input
+            $request->validate([
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Menyatakan bahwa avatar harus berupa gambar (jpeg, png, jpg, gif) dengan ukuran maksimal 2MB
+            ]);
 
-        $user = $request->user();
+            // Mendapatkan user yang sedang login
+            $user = Auth::user();
 
-        Auth::logout();
+            // Menghapus avatar lama jika ada
+            if ($user->avatar) {
+                Storage::delete($user->avatar);
+            }
 
-        $user->delete();
+            // Mengambil file avatar dari request
+            $avatar = $request->file('avatar');
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            // Menyimpan avatar baru ke storage
+            $avatarPath = 'avatars/' . $avatar->getClientOriginalName();
+            Storage::putFileAs('public', $avatar, $avatarPath);
 
-        return Redirect::to('/');
+            User::findOrFail($user->id)->update([
+                'avatar' => $avatarPath
+            ]);
+
+            // Redirect dengan pesan sukses
+            Alert::toast('Foto Profil berhasil diubah.', 'success')->autoClose(5000);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // Menampilkan pesan kesalahan jika terjadi pengecualian
+            Alert::toast('Terjadi kesalahan saat mengunggah avatar : ' . $e->getMessage(), 'error')->autoClose(5000);
+
+            return redirect()->back();
+        }
     }
 }

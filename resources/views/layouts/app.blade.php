@@ -40,9 +40,11 @@
 
 <body>
     @include('layouts.sidebar')
-    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+    <i class="bi bi-list mobile-nav-toggle d-xl-none mt-2"></i>
 
     @yield('content')
+
+    @include('sweetalert::alert')
 
     <!-- <div class="container">
     </div> -->
