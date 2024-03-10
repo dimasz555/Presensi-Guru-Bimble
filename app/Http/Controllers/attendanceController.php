@@ -57,7 +57,7 @@ class attendanceController extends Controller
             Alert::toast('Presensi berhasil disimpan.', 'success')->autoClose(5000);
 
             // Redirect atau kembalikan respons sesuai kebutuhan Anda
-            return redirect()->route('pages.presensi');
+            return redirect()->back();
         } catch (\Exception $e) {
             // Menampilkan pesan kesalahan jika terjadi pengecualian
             Alert::toast('Terjadi kesalahan :' . $e->getMessage(), 'error')->autoClose(5000);

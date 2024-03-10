@@ -10,10 +10,10 @@
             </div>
         </div>
     </div>
-    <div class="container mt-4 mx-3">
+    <div class="container mt-4 mx-3 mb-3">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card shadow"> <!-- Menambahkan kelas shadow -->
+                <div class="card shadow" style="border:none; box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);"> <!-- Menambahkan kelas shadow -->
                     <div class="card-body">
                         <div class="col-md-6 text-center mx-auto position-relative">
                             <!-- Avatar (lingkaran) -->
@@ -33,13 +33,25 @@
                         <form>
                             <!-- Nama -->
                             <div class="mb-3">
-                                <label for="inputNama" class="form-label">Nama</label>
+                                <label for="name" class="form-label">Nama</label>
                                 <input type="text" class="form-control" name="name" id="name" disabled value="{{ Auth::user()->name }}">
+                            </div>
+
+                            <!-- Nama -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" id="username" disabled value="{{ Auth::user()->username }}">
+                            </div>
+
+                            <!-- Nama -->
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Nomor Telepon</label>
+                                <input type="text" class="form-control" name="phone" id="phone" disabled value="{{ Auth::user()->phone }}">
                             </div>
 
                             <!-- Jenis Kelamin -->
                             <div class="mb-3">
-                                <label for="selectGender" class="form-label">Jenis Kelamin</label>
+                                <label for="gender" class="form-label">Jenis Kelamin</label>
                                 <input type="text" class="form-control" name="gender" id="gender" disabled value="{{ Auth::user()->gender }}">
                             </div>
 

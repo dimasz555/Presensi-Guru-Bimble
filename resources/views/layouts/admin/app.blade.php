@@ -22,7 +22,11 @@
     <link href="{{ asset ('admin/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
     <link href="{{ asset ('admin/assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset ('admin/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset ('admin/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset ('admin/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet"> -->
+
+    <!-- DataTables -->
+    <link href="{{ asset('plugin/DataTables-1.13.8/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugin/Buttons-2.4.2/css/buttons.dataTables.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="{{ asset ('admin/assets/css/style.css') }}" rel="stylesheet">
@@ -49,7 +53,6 @@
   <script src="{{asset ('admin/assets/vendor/quill/quill.min.js')}}"></script>
   <script src="{{asset ('admin/assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
   <script src="{{asset ('admin/assets/vendor/tinymce/tinymce.min.js')}}"></script>
-  <script src="{{asset ('admin/assets/vendor/php-email-form/validate.js')}}"></script>
 
   <!-- Template Main JS File -->
   <script src="{{asset('admin/assets/js/main.js') }}"></script>

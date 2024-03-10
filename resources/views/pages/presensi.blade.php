@@ -70,7 +70,7 @@
                         <div class="col-12">
                             <label class="form-label" for="attendance_at">Tanggal dan Waktu</label>
                             <div class="input-group input-group-merge">
-                                <input id="attendance_at" name="attendance_at" class="form-control" type="datetime-local" required/>
+                                <input id="attendance_at" name="attendance_at" class="form-control" type="datetime-local" required />
                             </div>
                         </div>
 
@@ -91,7 +91,7 @@
                         <div class="col-12">
                             <label class="form-label" for="location">Lokasi</label>
                             <div class="input-group input-group-merge">
-                                <input class="form-control" type="text" name="location" id="location" required/>
+                                <input class="form-control" type="text" name="location" id="location" required />
                             </div>
                         </div>
 
@@ -129,9 +129,20 @@
             //     'copy', 'csv', 'excel', 'pdf', 'print'
             // ],
             responsive: true,
+            info: false,
+            "language": {
+                "paginate": {
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                },
+                "search": "Pencarian :",
+                "emptyTable": "Tidak ada data",
+                "zeroRecords": "Tidak ada data",
+                "lengthMenu": "Menampilkan _MENU_ data per halaman",
+            }
         });
     });
-</script>
+</script>   
 
 
 
